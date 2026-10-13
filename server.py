@@ -225,6 +225,22 @@ class Server:
         results = run(cmd)
         return results.out
 
+    def add_metadata(self, key, value):
+        """
+        add a key value pair to the list of metadata to this Server
+        """
+        cmd = f'openstack --os-cloud {self._cloud_name} server set --property {key}={value} {self.id}'
+        results = run(cmd)
+        return results.out
+
+    def remove_metadata(self, key):
+        """
+        remove a given key from the list of metadata
+        """
+        cmd = f'openstack --os-cloud {self._cloud_name} server unset --property {key} {self.id}'
+        results = run(cmd)
+        return results.out
+
 
 if __name__ == '__main__':
     s = Server(server_id="79b3b46d-c7d8-47d2-a59d-ce5ded79b63b")
