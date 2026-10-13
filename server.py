@@ -221,7 +221,7 @@ class Server:
         """
         remove a tag from this Server
         """
-        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} set unset --tag {tag} {self.id}'
+        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} server set unset --tag {tag} {self.id}'
         results = run(cmd)
         return results.out
 
