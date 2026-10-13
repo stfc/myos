@@ -4,6 +4,8 @@ from myos.tools import run
 from myos.cloud import Cloud
 from myos.entitylist import EntityList
 
+NOVA_MICROVERSION = "2.26"
+
 class Server:
     def __init__(self, server_id=None, name=None, cloud=Cloud()):
         self._cloud = cloud
@@ -204,6 +206,22 @@ class Server:
         stops this Server when it is in status ACTIVE
         """
         cmd = f'openstack --os-cloud {self._cloud.name} server stop {self.id}'
+        results = run(cmd)
+        return results.out
+
+    def add_tag(self, tag):
+        """
+        add a tag to this Server
+        """
+        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} project set --tag {tag} {self.id}'
+        results = run(cmd)
+        return results.out
+
+    def remove_tag(self, tag):
+        """
+        remove a tag from this Server
+        """
+        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} project unset --tag {tag} {self.id}'
         results = run(cmd)
         return results.out
 
