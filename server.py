@@ -213,7 +213,7 @@ class Server:
         """
         add a tag to this Server
         """
-        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} project set --tag {tag} {self.id}'
+        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} server set --tag {tag} {self.id}'
         results = run(cmd)
         return results.out
 
@@ -221,7 +221,7 @@ class Server:
         """
         remove a tag from this Server
         """
-        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} project unset --tag {tag} {self.id}'
+        cmd = f'openstack --os-cloud {self._cloud_name} --os-compute-api-version {NOVA_MICROVERSION} set unset --tag {tag} {self.id}'
         results = run(cmd)
         return results.out
 
